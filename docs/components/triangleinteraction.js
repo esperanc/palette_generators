@@ -3,10 +3,10 @@ export {triangleInteraction};
 
 // Area of triangle pqr
 const triangleArea = (p, q, r) => {
-    const u = vec2.sub([], q, p);
-    const v = vec2.sub([], r, p);
-    const proj = vec2.orthoProj([], u, v);
-    return (vec2.len(vec2.sub([], u, proj)) * vec2.dist(p, r)) / 2;
+  const [x1,y1] = p;
+  const [x2,y2] = q;
+  const [x3,y3] = r;
+  return 0.5 * Math.abs(x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2));
 }
 
 // barycentric coordinates of point p defined on triangle a,b,c
@@ -22,7 +22,7 @@ const cartesianToBarycentric = (p, a, b, c) => {
 // cartesian coordinates of point with barycentric coordinates bary defined on triangle p,q,r
 const barycentricToCartesian = (bary, p, q, r) => {
     const [a, b, c] = bary;
-    const sum = a + b + c;
+    const sum = 1;//a + b + c;
     const center = [0, 0];
     vec2.scaleAndAdd(center, center, p, a / sum);
     vec2.scaleAndAdd(center, center, q, b / sum);
@@ -55,14 +55,17 @@ function triangleInteraction(ctx, vertices, change) {
           vertices [i] = [...snap]
         }
       }
+      center = barycentricToCartesian(baryCoords, ...vertices);
     }
     const rotateVertices = (clockwise = true) => {
       const angle = clockwise ? Math.PI/2 : -Math.PI/2;
+      const middle = [width/2,height/2];
       for (let i = 0; i < 3; i++) {
-        vec2.rotate (vertices[i],vertices[i],center,angle);
-        vertices[i][0] = Math.max(0,Math.min(width,vertices[i][0]));
-        vertices[i][1] = Math.max(0,Math.min(height,vertices[i][1]));
+        vec2.rotate (vertices[i],vertices[i],middle,angle);
+        // vertices[i][0] = Math.max(0,Math.min(width,vertices[i][0]));
+        // vertices[i][1] = Math.max(0,Math.min(height,vertices[i][1]));
       }
+      vec2.rotate (center, center, middle, angle);
     };
     const callChange = () => {
       const edgePoints = [
@@ -83,10 +86,13 @@ function triangleInteraction(ctx, vertices, change) {
       return false;
     };
   
+    //let originalBarycoords;
+
     canvas.onmousedown = function (event) {
       mouse = [event.offsetX, event.offsetY];
       selected = -1;
       let i = 0;
+      //originalBarycoords = [...baryCoords];
       for (let p of [...vertices, center]) {
         if (vec2.dist(mouse, p) < 8) {
           selected = i;

@@ -257,9 +257,10 @@ rotateClockButton.onclick = () => paletteInput.rotatePoints(true);
 //
 // Controls to shuffle the palette
 //
-const paletteOrder = Mutable(d3.range(7));
+const defaultOrder =  [3, 4, 5, 6, 0, 1, 2];
+const paletteOrder = Mutable([...defaultOrder]);
 const shufflePaletteOrder = () => paletteOrder.value = d3.shuffle(paletteOrder.value);
-const resetPaletteOrder = () => paletteOrder.value = d3.range(7);
+const resetPaletteOrder = () => paletteOrder.value = [...defaultOrder];
 const shufflePaletteOrderButton = html`<button>shuffle`;
 shufflePaletteOrderButton.onclick = shufflePaletteOrder;
 const resetPaletteOrderButton = html`<button>reset`;
@@ -290,14 +291,24 @@ const svgObject = html`<object id="testimg" data=${svgUrl} type="image/svg+xml">
 
 ```js
 //
+// Selects which path attribute is used to assign colors to svg
+//
+const colorAssignmentAttrInput = Inputs.select(["class", "fill"], { label: "Assign colors to paths by", value: "class" });
+const colorAssignmentAttr = Generators.input(colorAssignmentAttrInput);
+```
+
+```js
+//
 // Code to manipulate the path colors of an svg image
 //
 function getPathClasses (svgImage) {
   let classes = new Set([]);
+  let counter = 0;
   d3.select(svgImage)
     .selectAll("path")
     .each(function () {
-      classes.add(d3.select(this).attr("class"));
+      const attrib = d3.select(this).attr(colorAssignmentAttr) || ++counter;
+      classes.add(attrib);
     });
   return classes;
 }
@@ -317,11 +328,13 @@ const setSvgColors = (testimg, palette) => {
     color[c] = pal [i]; //pal[color_order[i]];
     i = (i + 1) % n;
   }
+  let counter = 0;
   d3.select(testimg)
     .selectAll("path")
     .each(function () {
+      const attrib = d3.select(this).attr(colorAssignmentAttr) || ++counter;
       let path = d3.select(this);
-      path.style("fill", color[path.attr("class")]);
+      path.style("fill", color[attrib]);
     });
 }
 setTimeout(() => setSvgColors (document.getElementById("testimg").contentDocument, palette), 10);
@@ -397,7 +410,7 @@ const loadSvgButton = html`
 </div>
 
 <div class="card inlineSons">
-  ${paletteDisplay(palette)}${shufflePaletteOrderButton}${resetPaletteOrderButton}
+  ${paletteDisplay(palette)}${shufflePaletteOrderButton}${resetPaletteOrderButton}${colorAssignmentAttrInput}
 </div>
 
 <div  class="grid grid-cols-2" >
