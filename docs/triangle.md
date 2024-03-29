@@ -286,7 +286,7 @@ const setSvgUrl = (url => {svgUrl.value = url});
 //
 // The sample svg object
 //
-const svgObject = html`<object id="testimg" data=${svgUrl} type="image/svg+xml">`;
+const svgObject = html`<object id="testimg" data=${svgUrl} type="image/svg+xml" style="width:100%;">`;
 ```
 
 ```js
