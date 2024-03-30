@@ -4,7 +4,7 @@ Creates a palette of 7 colors by interactively manipulating a triangle over a gr
 
 ```js
 import {triangleInteraction} from "./components/triangleinteraction.js";
-import {colorInterpolationImgData, colorInterpolationImgDataTriangle} from "./components/gradientinterpolation.js";
+import {gradientMaker} from "./components/shaderInterpolator.js";
 import {paletteDisplay} from "./components/palettedisplay.js";
 ```
 
@@ -84,30 +84,27 @@ function canvasInterface (options = {}) {
     snapping = false} = options;
   const canvas = html`<canvas width=${width} height=${height}>`;
   const ctx = canvas.getContext("2d");
-  const imgData = ctx.getImageData(0, 0, width, height);
+  const maker = gradientMaker({ width, height });
+  let imgData;
   const setImgData = () => {
     const colors = colorForm.value;
-    if (gradientTypeInput.value == "3 colors") {
-      colorInterpolationImgDataTriangle(
-        imgData,
-        colors.c2,
-        colors.c3,
-        colors.c0,
-        modeInput.value
-      );
-    } else {
-      colorInterpolationImgData(
-        imgData,
-        colors.c0,
-        colors.c1,
-        colors.c2,
-        colors.c3,
-        modeInput.value
-      );
-    }
+
+    let c =  gradientTypeInput.value  == "3 colors"
+      ? [colors.c0, colors.c2, colors.c3]
+      : [colors.c0, colors.c1, colors.c2, colors.c3];
+    c = c.map((color) => {
+      let { r, g, b } = d3.rgb(color);
+      return [r / 255, g / 255, b / 255, 1];
+    });
+
+    const lrgb = modeInput.value == "lrgb";
+    maker.gradient(c, lrgb);
+    ctx.clearRect(0,0,width,height);
+    ctx.drawImage(maker,0,0);
+    imgData = ctx.getImageData(0, 0, width, height);
   };
   setImgData();
-  const m = 10, w=width,h=height;
+  const m = 12, w=width,h=height;
   const snapPoints = [[m,m], [w/2,m], [w-m,m],
                         [m,h/2], [w/2,h/2], [w-m, h/2],
                         [m,h-m], [w/2,h-m], [w-m, h-m]];
@@ -223,9 +220,8 @@ const cardWidth = Mutable(500);
 const setCardWidth = (w) => cardWidth.value = w;
 ```
 
-
 ```js
-const paletteInput = canvasInterface({width:cardWidth-20});
+const paletteInput = canvasInterface({width:cardWidth-20, height:cardWidth-20});
 const originalPalette = Generators.input(paletteInput);
 const saveCanvas = htl.html`<button>save image`;
 saveCanvas.onclick = () => {
