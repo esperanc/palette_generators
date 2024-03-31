@@ -8,10 +8,12 @@ function gradientMaker(options = {}) {
     const canvas = html`<canvas width=${width} height=${height} >`;
     const regl = createRegl({
       canvas: canvas,
+      attributes: {preserveDrawingBuffer:true},
       extensions: ["webgl_draw_buffers", "oes_texture_float"]
     });
     const grad3 = gradient3(regl);
     const grad4 = gradient4(regl);
+    canvas.getPixel = (x,y) => regl.read({x,y,width:1,height:1});
     canvas.gradient = (colors, lrgb = true) => {
       lrgb = +lrgb;
       regl.clear({

@@ -85,7 +85,7 @@ function canvasInterface (options = {}) {
   const canvas = html`<canvas width=${width} height=${height}>`;
   const ctx = canvas.getContext("2d");
   const maker = gradientMaker({ width, height });
-  let imgData;
+  //let imgData;
   const setImgData = () => {
     const colors = colorForm.value;
 
@@ -99,9 +99,8 @@ function canvasInterface (options = {}) {
 
     const lrgb = modeInput.value == "lrgb";
     maker.gradient(c, lrgb);
-    ctx.clearRect(0,0,width,height);
-    ctx.drawImage(maker,0,0);
-    imgData = ctx.getImageData(0, 0, width, height);
+
+    //imgData = ctx.getImageData(0, 0, width, height);
   };
   setImgData();
   const m = 12, w=width,h=height;
@@ -122,7 +121,10 @@ function canvasInterface (options = {}) {
   container.append(canvas);
   container.value = [];
 
-  const drawImageData = () => ctx.putImageData(imgData, 0, 0);
+  const drawImageData = () => {
+    ctx.clearRect(0,0,width,height);
+    ctx.drawImage(maker,0,0);
+  }
   ctx.canvas.drawImageData = drawImageData;
 
   const drawInteractionWidgets = () => {
@@ -167,15 +169,18 @@ function canvasInterface (options = {}) {
 
     const palette = [];
     for (let [x, y] of points) {
+      x = Math.max(0,Math.min(width-1,x));
+      y = Math.max(0,Math.min(height-1,y));
       ctx.strokeStyle = "white";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(x, y, 8, 0, Math.PI * 2);
       ctx.stroke();
       const index = (Math.round(x) + Math.round(y) * width) * 4;
-      let [r, g, b] = imgData.data.slice(index, index + 3);
+      let [r, g, b, a] = maker.getPixel (x,height-1-y); //imgData.data.slice(index, index + 4);
       palette.push(`rgb(${r},${g},${b})`);
     }
+    //console.log ({fromMaker:maker.getPixel(points[0][0],height-points[0][1]), fromData:palette[0]})
     container.value = palette;
   };
   canvas.drawInteractionWidgets = drawInteractionWidgets;
