@@ -26,10 +26,8 @@ const defaultSvg = {
     2.5 : await FileAttachment("./data/Default2p5.svg").url(),
     3 :  await FileAttachment("./data/Default3.svg").url()
 }
-console.log ({defaultSvg});
 const svgUrl = Mutable(defaultSvg[2]);
 const setSvgUrl = (url => {
-    console.log ({url});
     svgUrl.value = url;
 });
 ```
@@ -82,8 +80,8 @@ let flipDominant = false;
 let flipSubordinate = false;
 const colorAngles = (baseAngle, ratio) => {
     return [0, 0.5, 
-        flipDominant ? - 0.5 / ratio : 0.5 / ratio, 
-        flipSubordinate ? -0.5 /ratio /ratio : 0.5 /ratio /ratio]
+        flipSubordinate ? - 0.5 / ratio : 0.5 / ratio, 
+        flipDominant ? -0.5 /ratio /ratio : 0.5 /ratio /ratio]
         .map(d => d+baseAngle)
 }
 const radians = (colorAngle) => (colorAngle-0.25)*Math.PI*2;
@@ -183,9 +181,10 @@ const contrastRatioInput = Inputs.select(
 );
 let usingDefaultSvg = true;
 const setUsingDefaultSvg = (val) => { usingDefaultSvg = val;} ;
+const loadDefaultSvg = () => setSvgUrl(defaultSvg[ratio]);
 contrastRatioInput.addEventListener("input", () => {
     ratio = contrastRatioInput.value.ratio;
-    if (usingDefaultSvg) setSvgUrl(defaultSvg[ratio]);
+    if (usingDefaultSvg) loadDefaultSvg();
     updateCircles(baseAngle, ratio);  
 })
 updateCircles(baseAngle, ratio);
@@ -262,7 +261,7 @@ const loadSvgButton = html`
 const loadDefaultSvgButton = html`<button>load default svg`;
 loadDefaultSvgButton.onclick = () => {
     setUsingDefaultSvg(true);
-    setSvgUrl(defaultSvg[ratio]);
+    loadDefaultSvg();
 }
 ```
 
