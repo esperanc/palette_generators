@@ -1,9 +1,15 @@
 # Hue Contrast
 
-The role of hue contrast in picking *Background*, *Dominant*, *Subordinate* and *Accent* colors in a palette.
+The role of hue contrast in picking *Background*, *Dominant*, *Subordinate* and *Accent* colors in a palette. The color wheel uses the [Okhsv](https://bottosson.github.io/posts/colorpicker/) color space for improved perceptual uniformity. 
+
 
 ```js
 import {paletteDisplay} from "./components/palettedisplay.js";
+
+//import {gammaColorScale} from "./components/gammacolorscale.js";
+//import {oklabColorScale} from "./components/oklabcolorscale.js";
+
+import {okhsvColorScale} from "./components/okhsvcolorscale.js";
 ```
 
 ```js
@@ -58,14 +64,18 @@ const main = d3.create("svg")
 const hueCircle = main.append("g").attr("class", "hueCircle");
 const colors = [];
 const primaries = ['red','green','blue'];
-const gamma = 1.5;
-const colorScale = (x => {
-    const rgb = d3.color(`hsl(${x*360},100%,50%)`).rgb()
-    for (let field of "rgb") {
-        rgb[field] = 255*Math.pow(rgb[field] / 255, 1/gamma); 
-    }
-    return rgb
-});
+
+// const gamma = 1.5;
+// const colorScale = gammaColorScale (gamma);
+
+// const L = 0.5;
+// const C = 0.5;
+// const colorScale = oklabColorScale (L,C);
+
+const S = 1;
+const V = 1;
+const colorScale = okhsvColorScale(S,V);
+
 for (let i = 0; i < 360; i++) colors.push(colorScale (i/360));
 const data = d3.range(360).map(d=>1); 
 const pie = d3.pie(); 
@@ -291,6 +301,7 @@ setTimeout(
   }
   
 </style>
+
 
 <div class="card inlineSons">
   ${paletteDisplay(palette)}

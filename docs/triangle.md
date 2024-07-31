@@ -58,7 +58,7 @@ shuffleGradientColorsButton.onclick = shuffleGradientColors;
 const gradientTypeInput = Inputs.select(["4 colors", "3 colors"], {
   label: "Gradient type"
 });
-const modeInput = Inputs.select(["rgb", "lrgb"], { label: "Interpolation" });
+const modeInput = Inputs.select(["rgb", "lrgb", "oklab"], { label: "Interpolation" });
 const mode = Generators.input(modeInput);
 const gradientType = Generators.input(gradientTypeInput);
 ```
@@ -79,9 +79,10 @@ const gradientType = Generators.input(gradientTypeInput);
 // The main canvas interface
 //
 function canvasInterface (options = {}) {
-  let {width = 500,
-    height = 500,
-    snapping = false} = options;
+  let width = 500,
+    height = 500;
+    //******************************
+  let { snapping = false} = options;
   const canvas = html`<canvas width=${width} height=${height}>`;
   const ctx = canvas.getContext("2d");
   const maker = gradientMaker({ width, height });
@@ -97,8 +98,7 @@ function canvasInterface (options = {}) {
       return [r / 255, g / 255, b / 255, 1];
     });
 
-    const lrgb = modeInput.value == "lrgb";
-    maker.gradient(c, lrgb);
+    maker.gradient(c, modeInput.value);
 
     //imgData = ctx.getImageData(0, 0, width, height);
   };

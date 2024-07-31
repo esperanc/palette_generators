@@ -14,8 +14,8 @@ function gradientMaker(options = {}) {
     const grad3 = gradient3(regl);
     const grad4 = gradient4(regl);
     canvas.getPixel = (x,y) => regl.read({x,y,width:1,height:1});
-    canvas.gradient = (colors, lrgb = true) => {
-      lrgb = +lrgb;
+    canvas.gradient = (colors, mode = 'lrgb') => {
+      const modeIndex = mode == "rgb" ? 0 : mode == "lrgb" ? 1 : 2;
       regl.clear({
         color: [0, 0, 0, 0],
         depth: 1
@@ -28,12 +28,12 @@ function gradientMaker(options = {}) {
             [1, -1]
           ],
           colors,
-          lrgb
+          modeIndex
         });
       } else {
         grad4({
           colors,
-          lrgb
+          modeIndex
         });
       }
       return canvas;
@@ -41,27 +41,50 @@ function gradientMaker(options = {}) {
     return canvas;
   }
 
+  const conversionFuncs = `
+    vec3 rgb2lrgb(vec3 x) {
+      vec3 xlo = x / 12.92;
+      vec3 xhi = pow((x + 0.055) / 1.055, vec3(2.4));
+      return mix(xlo, xhi, step(0.04045, x));
+    }
+    vec3 lrgb2rgb(vec3 x) {
+      vec3 xlo = 12.92 * x;
+      vec3 xhi = 1.055 * pow(x, vec3(1.0 / 2.4)) - 0.055;
+      return mix(xlo, xhi, step(vec3(0.0031308), x));
+    }
+    vec3 oklab2lrgb(vec3 oklab) {
+      vec3 lms = oklab * mat3(1,  0.3963377774,  0.2158037573,
+                              1, -0.1055613458, -0.0638541728,
+                              1, -0.0894841775, -1.2914855480);
+      lms *= lms * lms;
+      return lms * mat3( 4.0767416621, -3.3077115913,  0.2309699292, 
+                        -1.2684380046,  2.6097574011, -0.3413193965, 
+                        -0.0041960863, -0.7034186147,  1.7076147010);
+    }
+    vec3 lrgb2oklab(vec3 lrgb) {
+      vec3 lms = lrgb * mat3(0.4121656120, 0.5362752080, 0.0514575653,
+                            0.2118591070, 0.6807189584, 0.1074065790,
+                            0.0883097947, 0.2818474174, 0.6302613616);
+      return pow(lms, vec3(1.0 / 3.0)) * mat3(0.2104542553,  0.7936177850, -0.0040720468,
+                                              1.9779984951, -2.4285922050,  0.4505937099,
+                                              0.0259040371,  0.7827717662, -0.8086757660);
+    }
+  `;
+
+
   function gradient3(regl) {
     return regl({
       frag: `
-        precision mediump float;
-        uniform float lrgb;
-        varying vec4 color;
-        float fnToRgb (float c) {
-          float tmp = abs(c);
-            if (tmp > 0.0031308) {
-                return 1.055 * pow(tmp, 1. / 2.4) - 0.055;
-          }
-            return c * 12.92;
-        }
-        vec4 toRgb(vec4 color) {
-          return vec4 (fnToRgb(color.r), fnToRgb(color.g), fnToRgb(color.b), color.a);
-        }
+        precision highp float;
+        uniform float modeIndex;
+        varying vec3 color;
+        ${conversionFuncs}
         void main () {
-          gl_FragColor = (lrgb != 0.) ? toRgb(color) : color;
+          gl_FragColor = vec4 ((modeIndex == 2.) ? lrgb2rgb(oklab2lrgb(color)) : 
+                               (modeIndex == 1.) ? lrgb2rgb(color) : color, 1.);
         }`,
       vert: `
-        precision mediump float;
+        precision highp float;
         attribute vec2 index;
         uniform vec4 color1;
         uniform vec2 position1;
@@ -69,29 +92,23 @@ function gradientMaker(options = {}) {
         uniform vec2 position2;
         uniform vec4 color3;
         uniform vec2 position3;
-        uniform float lrgb;
-        varying vec4 color;
-        float fnToLrgb (float c) {
-          float tmp = abs(c);
-          if (tmp <= 0.04045) {
-                return c / 12.92;
-            }
-            return pow((tmp + 0.055) / 1.055, 2.4);
-        }
-        vec4 toLrgb(vec4 color) {
-          return vec4 (fnToLrgb(color.r), fnToLrgb(color.g), fnToLrgb(color.b), color.a);
-        }
+        uniform float modeIndex;
+        varying vec3 color;
+        ${conversionFuncs}
         void main () {
+          vec3 baseColor = vec3(0.);
           if (index.x == 1.) {
             gl_Position = vec4(position1,0,1);
-            color = (lrgb != 0.) ? toLrgb(color1) : color1;
+            baseColor = color1.rgb;
           } else if (index.x == 2.) {
             gl_Position = vec4(position2,0,1);
-            color = (lrgb != 0.) ? toLrgb(color2) : color2;        
+            baseColor = color2.rgb;        
           } else {
             gl_Position = vec4(position3,0,1);
-            color = (lrgb != 0.) ? toLrgb(color3) : color3;   
+            baseColor = color3.rgb;   
           }
+          color = (modeIndex == 2.) ? lrgb2oklab(rgb2lrgb(baseColor)) : 
+                  (modeIndex == 1.) ? rgb2lrgb(baseColor) : baseColor;
         }`,
   
       // These are the vertex attributes that will be passed
@@ -111,7 +128,7 @@ function gradientMaker(options = {}) {
         position1: (_, props) => props.positions[0],
         position2: (_, props) => props.positions[1],
         position3: (_, props) => props.positions[2],
-        lrgb: (_, props) => props.lrgb || 0.0
+        modeIndex: (_, props) => props.modeIndex || 0.0
       },
   
       // The depth buffer
@@ -132,34 +149,20 @@ function gradientMaker(options = {}) {
       uniform vec4 color2;
       uniform vec4 color3;
       uniform vec2 iResolution;
-      uniform float lrgb;
-      float fnToRgb (float c) {
-        float tmp = abs(c);
-	      if (tmp > 0.0031308) {
-		      return 1.055 * pow(tmp, 1. / 2.4) - 0.055;
-        }
-	      return c * 12.92;
-      }
-      vec4 toRgb(vec4 color) {
-        return vec4 (fnToRgb(color.r), fnToRgb(color.g), fnToRgb(color.b), color.a);
-      }
-      float fnToLrgb (float c) {
-        float tmp = abs(c);
-        if (tmp <= 0.04045) {
-		      return c / 12.92;
-	      }
-	      return pow((tmp + 0.055) / 1.055, 2.4);
-      }
-      vec4 toLrgb(vec4 color) {
-        return vec4 (fnToLrgb(color.r), fnToLrgb(color.g), fnToLrgb(color.b), color.a);
-      }
+      uniform float modeIndex;
+      ${conversionFuncs}
       void main () {
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
-        if (lrgb != 0.) {
-          vec4 colorLeft = mix(toLrgb(color2),toLrgb(color0),uv.y);
-          vec4 colorRight = mix(toLrgb(color3),toLrgb(color1),uv.y);
-          vec4 color = toRgb(mix(colorLeft,colorRight,uv.x));
-          gl_FragColor = color;
+        if (modeIndex == 1.) {
+          vec3 colorLeft = mix(rgb2lrgb(color2.rgb),rgb2lrgb(color0.rgb),uv.y);
+          vec3 colorRight = mix(rgb2lrgb(color3.rgb),rgb2lrgb(color1.rgb),uv.y);
+          vec3 color = lrgb2rgb(mix(colorLeft,colorRight,uv.x));
+          gl_FragColor = vec4(color,1.);
+        } else if (modeIndex == 2.) {
+          vec3 colorLeft = mix(lrgb2oklab(rgb2lrgb(color2.rgb)),lrgb2oklab(rgb2lrgb(color0.rgb)),uv.y);
+          vec3 colorRight = mix(lrgb2oklab(rgb2lrgb(color3.rgb)),lrgb2oklab(rgb2lrgb(color1.rgb)),uv.y);
+          vec3 color = lrgb2rgb(oklab2lrgb(mix(colorLeft,colorRight,uv.x)));
+          gl_FragColor = vec4(color,1.);
         } else {
           vec4 colorLeft = mix(color2,color0,uv.y);
           vec4 colorRight = mix(color3,color1,uv.y);
@@ -171,7 +174,7 @@ function gradientMaker(options = {}) {
       vert: `
         attribute vec2 position;
         void main () {
-          gl_Position = vec4(position, 1, 1.0);
+          gl_Position = vec4(position, 0., 1.0);
         }`,
   
       // These are the vertex attributes that will be passed
@@ -193,7 +196,7 @@ function gradientMaker(options = {}) {
         color1: (_, props) => props.colors[1],
         color2: (_, props) => props.colors[2],
         color3: (_, props) => props.colors[3],
-        lrgb: (_, props) => props.lrgb || 0.0
+        modeIndex: (_, props) => props.modeIndex || 0.0
       },
   
       // The depth buffer
