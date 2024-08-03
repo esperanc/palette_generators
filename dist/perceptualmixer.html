@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Perceptual Color Mixer | Palette Generators</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="modulepreload" href="./_observablehq/client.js">
+<link rel="modulepreload" href="./_observablehq/runtime.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.js">
+<link rel="modulepreload" href="./_import/components/colorconversion.83ea89a4.js">
+<link rel="modulepreload" href="./_import/components/colorpicker.8bd2b5ce.js">
+<link rel="modulepreload" href="./_import/components/proportionwidget.22e4c6d5.js">
+<link rel="modulepreload" href="./_import/components/colorwidget.82664249.js">
+<link rel="modulepreload" href="./_import/components/pickerrender.18415b54.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/_esm.js">
+<link rel="modulepreload" href="./_import/components/hsluv.67072db7.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/_esm.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/_esm.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.js";
+
+define({id: "a743ac91", outputs: ["rgb_to_hsl","hsl_to_rgb","rgb_to_hsv","hsv_to_rgb","srgb_transfer_function","srgb_transfer_function_inv","linear_srgb_to_oklab","oklab_to_linear_srgb","toe_inv","okhsv_to_srgb","srgb_to_okhsv","find_gamut_intersection","srgb_to_okhsl","okhsl_to_srgb","rgb_to_oklch","oklch_to_rgb","cartesianRgb2normXy","polarRgb2normXy","colorPicker","proportionWidget","colorWidget"], body: async () => {
+const [{rgb_to_hsl, hsl_to_rgb, rgb_to_hsv, hsv_to_rgb, srgb_transfer_function, srgb_transfer_function_inv, linear_srgb_to_oklab, oklab_to_linear_srgb, toe_inv, okhsv_to_srgb, srgb_to_okhsv, find_gamut_intersection, srgb_to_okhsl, okhsl_to_srgb, rgb_to_oklch, oklch_to_rgb}, {cartesianRgb2normXy, polarRgb2normXy, colorPicker}, {proportionWidget}, {colorWidget}] = await Promise.all([import("./_import/components/colorconversion.83ea89a4.js"), import("./_import/components/colorpicker.8bd2b5ce.js"), import("./_import/components/proportionwidget.22e4c6d5.js"), import("./_import/components/colorwidget.82664249.js")]);
+
+
+return {rgb_to_hsl,hsl_to_rgb,rgb_to_hsv,hsv_to_rgb,srgb_transfer_function,srgb_transfer_function_inv,linear_srgb_to_oklab,oklab_to_linear_srgb,toe_inv,okhsv_to_srgb,srgb_to_okhsv,find_gamut_intersection,srgb_to_okhsl,okhsl_to_srgb,rgb_to_oklch,oklch_to_rgb,cartesianRgb2normXy,polarRgb2normXy,colorPicker,proportionWidget,colorWidget};
+}});
+
+define({id: "46f78c4a", inputs: ["Mutable","d3","html","svg"], outputs: ["render","render_okhsl","render_static","oklab_C_scale","rgb","clamp","clamp255","set_rgb","get_rgb","result","imageDataCanvas"], body: async (Mutable,d3,html,svg) => {
+const {render, render_okhsl, render_static, oklab_C_scale} = await import("./_import/components/pickerrender.18415b54.js");
+ 
+const rgb = Mutable(d3.color('red'));
+const clamp = x => isNaN(x) ? 0 : Math.max(0,Math.min(1,x));
+const clamp255 = x => isNaN(x) ? 0 : Math.max(0,Math.min(255,x));
+const set_rgb = (r,g,b) => rgb.value = Object.assign(rgb.value, {r:clamp255(r),g:clamp255(g),b:clamp255(b)});
+const get_rgb = () => [rgb.value.r, rgb.value.g, rgb.value.b];
+let result = render_static();
+Object.assign(result, render(...get_rgb()));
+Object.assign(result, render_okhsl(...get_rgb()));
+function imageDataCanvas (imgData) {
+    const [w, h] = [imgData.width, imgData.height];
+    const canvas = html`<canvas width=${w} height=${h}>`;
+    const ctx = canvas.getContext("2d");
+    const setImgData = () => {
+        ctx.putImageData(imgData, 0, 0);
+    }
+    setImgData();
+    const margin = 10;
+    Object.assign (canvas.style, {
+        position: "absolute",
+        left: margin+"px",
+        top: margin+"px"
+    })
+    const container = html`<div>`;
+    Object.assign(container.style, {
+        position:"relative",
+    })
+    const cursorSvg = html`<svg width=${w+margin*2} height=${h+margin*2} viewbox="${-margin} ${-margin} ${w+margin*2} ${h+margin*2}" >`;
+    cursorSvg.append (svg`<rect x=0 y=0 width=${w} height=${h} stroke=blue fill=none>`);
+    container.append(canvas,cursorSvg)
+    return container;
+}
+return {render,render_okhsl,render_static,oklab_C_scale,rgb,clamp,clamp255,set_rgb,get_rgb,result,imageDataCanvas};
+}});
+
+define({id: "40d8f15a", inputs: ["srgb_to_okhsl","clamp","get_rgb","okhsl_to_srgb"], outputs: ["safe_srgb_to_okhsl","okhsl","torgb"], body: (srgb_to_okhsl,clamp,get_rgb,okhsl_to_srgb) => {
+const safe_srgb_to_okhsl = (r,g,b) => srgb_to_okhsl(r,g,b).map(clamp);
+const okhsl = safe_srgb_to_okhsl (...get_rgb());
+const torgb = okhsl_to_srgb (...okhsl);
+return {safe_srgb_to_okhsl,okhsl,torgb};
+}});
+
+define({id: "004a9239", inputs: ["cartesianRgb2normXy","safe_srgb_to_okhsl","get_rgb","okhsl_to_srgb","clamp","set_rgb","colorPicker","result"], outputs: ["okhsl_hl"], body: (cartesianRgb2normXy,safe_srgb_to_okhsl,get_rgb,okhsl_to_srgb,clamp,set_rgb,colorPicker,result) => {
+// OKHSL_HL
+const okhsl_hl = {};
+okhsl_hl.rgb2normXy = cartesianRgb2normXy (safe_srgb_to_okhsl, [0,2], [1,-1]);
+okhsl_hl.callback = (normx,normy) => { 
+    const rgb_before = get_rgb();
+    const okhsl = safe_srgb_to_okhsl (...rgb_before);
+    const s = okhsl[1];
+    const [h,l] = [normx,1-normy];
+    const rgb_after = okhsl_to_srgb (clamp(h), clamp(s), clamp(l));
+    set_rgb (...rgb_after);
+};
+okhsl_hl.picker = colorPicker (result.okhsl_hl, okhsl_hl.rgb2normXy, okhsl_hl.callback);
+return {okhsl_hl};
+}});
+
+define({id: "2bab5475", inputs: ["polarRgb2normXy","srgb_to_okhsl","get_rgb","okhsl_to_srgb","clamp","set_rgb","colorPicker","result"], outputs: ["okhsl_hs"], body: (polarRgb2normXy,srgb_to_okhsl,get_rgb,okhsl_to_srgb,clamp,set_rgb,colorPicker,result) => {
+// OKHSL_HS
+const okhsl_hs = {};
+okhsl_hs.rgb2normXy = polarRgb2normXy (srgb_to_okhsl, 0, 1, [1,1]);
+okhsl_hs.callback = (normx,normy) => {
+    const rgb_before = get_rgb();
+    const okhsl = srgb_to_okhsl (...rgb_before);
+    const hsl_a = 2*normy-1;
+    const hsl_b = 2*(1 - normx)-1;
+    const h = Math.atan2(hsl_a, hsl_b) / Math.PI * 0.5 + 0.5;
+    const s = 2 * Math.hypot(normy-0.5,normx-0.5);
+    const l = okhsl[2];
+    const rgb_after = okhsl_to_srgb (clamp(h),clamp(s),clamp(l));
+    set_rgb (...rgb_after);
+}
+okhsl_hs.picker = colorPicker (result.okhsl_hs, okhsl_hs.rgb2normXy, okhsl_hs.callback)
+return {okhsl_hs};
+}});
+
+define({id: "db7e805d", inputs: ["cartesianRgb2normXy","rgb_to_oklch","get_rgb","oklch_to_rgb","clamp","set_rgb","colorPicker","result","display"], outputs: ["oklch_h"], body: (cartesianRgb2normXy,rgb_to_oklch,get_rgb,oklch_to_rgb,clamp,set_rgb,colorPicker,result,display) => {
+// OKLCH_H
+const oklch_h = {};
+oklch_h.rgb2normXy = cartesianRgb2normXy (rgb_to_oklch, [2], [1]);
+oklch_h.callback = (normx,normy) => { 
+    const rgb_before = get_rgb();
+    const lch = rgb_to_oklch (...rgb_before);
+    const h = normy;
+    const rgb_after = oklch_to_rgb (clamp(lch[0]),clamp(lch[1]),clamp(h));
+    set_rgb (...rgb_after);
+};
+oklch_h.picker = colorPicker (result.oklch_h, oklch_h.rgb2normXy,oklch_h.callback);
+display (oklch_h.picker);
+return {oklch_h};
+}});
+
+define({id: "f14ec844", inputs: ["cartesianRgb2normXy","rgb_to_oklch","oklab_C_scale","get_rgb","oklch_to_rgb","clamp","set_rgb","colorPicker","result","display"], outputs: ["oklch_lc"], body: (cartesianRgb2normXy,rgb_to_oklch,oklab_C_scale,get_rgb,oklch_to_rgb,clamp,set_rgb,colorPicker,result,display) => {
+// OKLCH_LC
+const oklch_lc = {};
+oklch_lc.rgb2normXy = cartesianRgb2normXy (rgb_to_oklch, [1,0], [oklab_C_scale,-1]);
+oklch_lc.callback = (normx,normy) => { 
+    const rgb_before = get_rgb();
+    const lch = rgb_to_oklch (...rgb_before);
+    const [c,l] = [normx*oklab_C_scale,1-normy];
+    const rgb_after = oklch_to_rgb (clamp(l), clamp(c), clamp(lch[2]));
+    set_rgb (...rgb_after);
+};
+oklch_lc.picker = colorPicker (result.oklch_lc, oklch_lc.rgb2normXy,oklch_lc.callback);
+display (oklch_lc.picker);
+return {oklch_lc};
+}});
+
+define({id: "7251eb7f", inputs: ["Mutable"], outputs: ["parts","getParts","setParts"], body: (Mutable) => {
+const parts = Mutable([0.5, 0.5]);
+const getParts = () => [...parts.value]
+const setParts = (newParts) => parts.value = newParts;
+return {parts,getParts,setParts};
+}});
+
+define({id: "185c7446", inputs: ["Mutable"], outputs: ["selected","getSelected","setSelected"], body: (Mutable) => {
+const selected = Mutable(0);
+const getSelected = () => selected.value
+const setSelected = (newsel) => selected.value = newsel;
+return {selected,getSelected,setSelected};
+}});
+
+define({id: "c075cff8", inputs: ["Mutable","d3"], outputs: ["colors","getColors","setColors","getColor","setColor"], body: (Mutable,d3) => {
+const colors = Mutable(d3.schemeAccent);
+const getColors = () => colors.value;
+const setColors = (newColors) => {colors.value = newColors };
+const getColor = (i) => colors.value[i];
+const setColor = (i,color) => {colors.value[i] = color};
+return {colors,getColors,setColors,getColor,setColor};
+}});
+
+define({id: "9432590c", inputs: ["proportionWidget","parts","getSelected","getColor","width","Generators"], outputs: ["proportionsInput","proportions"], body: (proportionWidget,parts,getSelected,getColor,width,Generators) => {
+const proportionsInput = proportionWidget({parts, selected: getSelected(), color: getColor, width:width-30});
+const proportions = Generators.input(proportionsInput);
+return {proportionsInput,proportions};
+}});
+
+define({id: "f7870079", inputs: ["proportions","setSelected","d3","getColor","set_rgb","parts"], body: (proportions,setSelected,d3,getColor,set_rgb,parts) => {
+// Reactivity:
+// Updates selectedColor with the value of the new selected color
+// Modifies the parts array without triggering the reactivity
+{
+  const prop = proportions;
+  setSelected(prop.selected);
+  const col = d3.color(getColor(prop.selected));
+  set_rgb (col.r, col.g, col.b);
+  prop.parts.forEach((d, i) => {
+    parts[i] = d;
+  });
+}
+}});
+
+define({id: "b4b5d71f", inputs: ["rgb","setColor","getSelected","proportionsInput"], body: (rgb,setColor,getSelected,proportionsInput) => {
+// Reactivity:
+// Updates the display of the proportions widget with the value of input selectedColor
+{
+  rgb;
+  setColor(getSelected(),rgb.formatHex());
+  proportionsInput.update();
+}
+}});
+
+define({id: "7da09fcf", inputs: ["html","getParts","setParts"], outputs: ["insertButton"], body: (html,getParts,setParts) => {
+const insertButton = html`<button>insert`;
+insertButton.onclick = () => {
+    let pts = getParts();
+    const n = pts.length;
+    if (n < 8) {
+      const sum = pts.reduce((a, b) => a + b, 0);
+      pts = pts.map((x) => ((x / sum) * n) / (n + 1));
+      pts.push(1 / (n + 1));
+      setParts(pts);
+    }
+};
+return {insertButton};
+}});
+
+define({id: "10af079f", inputs: ["html","getParts","getColors","getSelected","setSelected","d3","set_rgb","setColors","setParts"], outputs: ["removeButton"], body: (html,getParts,getColors,getSelected,setSelected,d3,set_rgb,setColors,setParts) => {
+const removeButton = html`<button>remove`;
+removeButton.onclick = () => {
+    let pts = getParts();
+    const n = pts.length;    
+    if (n > 1) {
+      let col = getColors();
+      let isel = getSelected();
+      pts.splice(isel, 1);
+      let deletedColor = col[isel];
+      col.splice(isel, 1);
+      col.push(deletedColor);
+      if (isel >= pts.length) {
+        isel = pts.length - 1;
+        setSelected(isel);
+      }
+      const curColor = d3.color(col[isel]);
+      set_rgb (curColor.r, curColor.g, curColor.b);
+      const sum = pts.reduce((a, b) => a + b, 0);
+      pts = pts.map((x) => x / sum);
+      setColors(col);
+      setParts(pts);
+    }
+};
+return {removeButton};
+}});
+
+define({id: "0ae20b3c", inputs: ["proportions","insertButton","removeButton"], body: (proportions,insertButton,removeButton) => {
+//
+// Button enable / disable
+{
+  proportions;
+  const n = proportions.parts.length;
+  insertButton.disabled = n >= 8;
+  removeButton.disabled = n <= 2;
+}
+}});
+
+define({id: "7a39cf90", inputs: ["rgb","colorWidget","get_rgb","set_rgb"], outputs: ["rgbWidgetInput"], body: (rgb,colorWidget,get_rgb,set_rgb) => {
+rgb;
+const rgbWidgetInput = colorWidget({value:get_rgb()});
+rgbWidgetInput.oninput = () => set_rgb(...rgbWidgetInput.value);
+return {rgbWidgetInput};
+}});
+
+define({id: "2240879e", inputs: ["proportions","rgb","d3","colors","linear_srgb_to_oklab","oklab_to_linear_srgb","html","width"], outputs: ["averageSample"], body: (proportions,rgb,d3,colors,linear_srgb_to_oklab,oklab_to_linear_srgb,html,width) => {
+proportions;
+rgb;
+let averageSample;
+{
+    let oklab_avg = [0,0,0];
+    const parts = proportions.parts;
+    const n = parts.length;
+    for (let i = 0; i < n; i++) {
+        const part = parts[i];
+        const color = d3.color(colors[i]);
+        let oklab = linear_srgb_to_oklab (color.r/255, color.g/255, color.b/255);
+        for (let j = 0; j < 3; j++) {
+            oklab_avg[j] += part * oklab[j];
+        }
+    }
+    let [r,g,b] = oklab_to_linear_srgb(...oklab_avg);
+    const rgbColor = `rgb(${Math.round(r*255)},${Math.round(g*255)},${Math.round(b*255)})`;
+    const avgColor = d3.color(rgbColor);
+    averageSample = html`<div>`;
+    Object.assign(averageSample.style, {
+        width: (width-30)+"px",
+        height: "100px",
+        background: avgColor.formatHex()
+    })
+}
+return {averageSample};
+}});
+
+define({id: "935a802b", inputs: ["rgb","oklch_h","get_rgb","oklch_lc","okhsl_hs","okhsl_hl","result","render","render_okhsl"], body: (rgb,oklch_h,get_rgb,oklch_lc,okhsl_hs,okhsl_hl,result,render,render_okhsl) => {
+// Reactive Update 
+rgb;
+//hsv_h.picker.setRgb(...get_rgb());
+//okhsv_h.picker.setRgb(...get_rgb());
+//hsv_sv.picker.setRgb(...get_rgb());
+
+// Update cursors
+oklch_h.picker.setRgb(...get_rgb());
+oklch_lc.picker.setRgb(...get_rgb());
+okhsl_hs.picker.setRgb(...get_rgb());
+okhsl_hl.picker.setRgb(...get_rgb());
+// Update imgDatas
+Object.assign(result, render(...get_rgb()));
+Object.assign(result, render_okhsl(...get_rgb()));
+//hsv_sv.picker.setImgData(result.hsv_sv);
+oklch_lc.picker.setImgData(result.oklch_lc);
+okhsl_hs.picker.setImgData(result.okhsl_hs);
+okhsl_hl.picker.setImgData(result.okhsl_hl);
+}});
+
+define({id: "f42cb246", inline: true, inputs: ["averageSample","display"], body: async (averageSample,display) => {
+display(await(
+averageSample
+))
+}});
+
+define({id: "d7defd87", inline: true, inputs: ["proportionsInput","display"], body: async (proportionsInput,display) => {
+display(await(
+proportionsInput
+))
+}});
+
+define({id: "67edc4d8", inline: true, inputs: ["insertButton","display"], body: async (insertButton,display) => {
+display(await(
+insertButton
+))
+}});
+
+define({id: "1b3af3db", inline: true, inputs: ["removeButton","display"], body: async (removeButton,display) => {
+display(await(
+removeButton
+))
+}});
+
+define({id: "29d43b6d", inline: true, inputs: ["rgbWidgetInput","display"], body: async (rgbWidgetInput,display) => {
+display(await(
+rgbWidgetInput
+))
+}});
+
+define({id: "97f33c82", inline: true, inputs: ["oklch_h","display"], body: async (oklch_h,display) => {
+display(await(
+oklch_h.picker
+))
+}});
+
+define({id: "21ecdccd", inline: true, inputs: ["oklch_lc","display"], body: async (oklch_lc,display) => {
+display(await(
+oklch_lc.picker
+))
+}});
+
+define({id: "deeb24cb", inline: true, inputs: ["okhsl_hs","display"], body: async (okhsl_hs,display) => {
+display(await(
+okhsl_hs.picker
+))
+}});
+
+define({id: "248d80c4", inline: true, inputs: ["okhsl_hl","display"], body: async (okhsl_hl,display) => {
+display(await(
+okhsl_hl.picker
+))
+}});
+
+</script>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="./">Palette Generators</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link"><a href="./huecontrast">Hue Contrast</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./perceptualmixer">Perceptual Color Mixer</a></li>
+    <li class="observablehq-link"><a href="./triangle">Triangle</a></li>
+  </ol>
+</nav>
+<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),o=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?o.checked=r==="true":o.indeterminate=!0;for(const t of document.querySelectorAll("#observablehq-sidebar summary")){const s=t.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${t.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type), h2:first-child, :not(h1) + h2">
+<nav>
+</nav>
+</aside>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<h1 id="perceptual-color-mixer" tabindex="-1"><a class="observablehq-header-anchor" href="#perceptual-color-mixer">Perceptual Color Mixer</a></h1>
+<div id="cell-a743ac91" class="observablehq observablehq--block"></div>
+<div id="cell-46f78c4a" class="observablehq observablehq--block"></div>
+<div id="cell-40d8f15a" class="observablehq observablehq--block"></div>
+<div id="cell-004a9239" class="observablehq observablehq--block"></div>
+<div id="cell-2bab5475" class="observablehq observablehq--block"></div>
+<div id="cell-db7e805d" class="observablehq observablehq--block"></div>
+<div id="cell-f14ec844" class="observablehq observablehq--block"></div>
+<div id="cell-7251eb7f" class="observablehq observablehq--block"></div>
+<div id="cell-185c7446" class="observablehq observablehq--block"></div>
+<div id="cell-c075cff8" class="observablehq observablehq--block"></div>
+<div id="cell-9432590c" class="observablehq observablehq--block"></div>
+<div id="cell-f7870079" class="observablehq observablehq--block"></div>
+<div id="cell-b4b5d71f" class="observablehq observablehq--block"></div>
+<div id="cell-7da09fcf" class="observablehq observablehq--block"></div>
+<div id="cell-10af079f" class="observablehq observablehq--block"></div>
+<div id="cell-0ae20b3c" class="observablehq observablehq--block"></div>
+<div id="cell-7a39cf90" class="observablehq observablehq--block"></div>
+<div id="cell-2240879e" class="observablehq observablehq--block"></div>
+<div id="cell-935a802b" class="observablehq observablehq--block"></div>
+<style>
+  svg.proportion g.handles .dragging {
+    filter: drop-shadow(0 0 0.1rem black);
+  }
+  svg.proportion g.percentages text {
+    font-family: sans-serif;
+    font-size: 14pt;
+    fill: white;
+    stroke: none;
+    filter: drop-shadow(0 0 1px black);
+  }
+</style>
+<style>
+  div.inlineSons >* {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+
+  div.centeredSons >* {
+    display: inline-block;
+    margin-left: auto;
+    margin-bottom: 10px;
+    width:100%;
+    text-align:center;
+  }
+</style>
+<style>
+  form.colorwidget label {
+    font-family: sans-serif;
+    font-size: 10pt;
+    padding-right: 1em;
+  }
+  form.colorwidget label input {
+    margin-left: 0.5em;
+  }
+</style>
+<div class="card">
+<span id="cell-f42cb246" class="observablehq--loading"></span>
+</div>
+<div class="card">
+<span id="cell-d7defd87" class="observablehq--loading"></span>
+    <div class="centeredSons">
+        <div>
+        <span id="cell-67edc4d8" class="observablehq--loading"></span>
+        <span id="cell-1b3af3db" class="observablehq--loading"></span>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="centeredSons">
+        <span id="cell-29d43b6d" class="observablehq--loading"></span>
+    </div>
+    <div style="display:flex">
+        <div style="flex-grow:1"><span id="cell-97f33c82" class="observablehq--loading"></span></div>
+        <div style="flex-grow:1"><span id="cell-21ecdccd" class="observablehq--loading"></span></div>
+        <div style="flex-grow:1"><span id="cell-deeb24cb" class="observablehq--loading"></span></div>
+        <div style="flex-grow:1"><span id="cell-248d80c4" class="observablehq--loading"></span></div>
+    </div>
+</div>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="prev" href="./huecontrast"><span>Hue Contrast</span></a><a rel="next" href="./triangle"><span>Triangle</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank">Observable</a> on <a title="2024-05-29T17:18:39">May 29, 2024</a>.</div>
+</footer>
+</div>

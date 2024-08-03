@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Triangle | Palette Generators</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.css">
+<link rel="modulepreload" href="./_observablehq/client.js">
+<link rel="modulepreload" href="./_observablehq/runtime.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.js">
+<link rel="modulepreload" href="./_import/components/triangleinteraction.34da8c1c.js">
+<link rel="modulepreload" href="./_import/components/shaderInterpolator.211c07ef.js">
+<link rel="modulepreload" href="./_import/components/palettedisplay.58e0c898.js">
+<link rel="modulepreload" href="./_import/components/vec2.97b2eca9.js">
+<link rel="modulepreload" href="./_npm/d3-require@1.3.0/_esm.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/_esm.js">
+<link rel="modulepreload" href="./_npm/gl-matrix@3.4.3/_esm.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/_esm.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/_esm.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/_esm.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.js";
+import {registerFile} from "./_observablehq/stdlib.js";
+
+registerFile("./data/rotateClock.png", {"name":"./data/rotateClock.png","mimeType":"image/png","path":"./_file/data/rotateClock.77c55cec.png","lastModified":1711660557386});
+registerFile("./data/rotateCounter.png", {"name":"./data/rotateCounter.png","mimeType":"image/png","path":"./_file/data/rotateCounter.8c4b5ed4.png","lastModified":1711660523009});
+registerFile("./data/testimg.svg", {"name":"./data/testimg.svg","mimeType":"image/svg+xml","path":"./_file/data/testimg.7dff84ca.svg","lastModified":1711390468763});
+
+define({id: "c038c208", outputs: ["triangleInteraction","gradientMaker","paletteDisplay"], body: async () => {
+const [{triangleInteraction}, {gradientMaker}, {paletteDisplay}] = await Promise.all([import("./_import/components/triangleinteraction.34da8c1c.js"), import("./_import/components/shaderInterpolator.211c07ef.js"), import("./_import/components/palettedisplay.58e0c898.js")]);
+
+return {triangleInteraction,gradientMaker,paletteDisplay};
+}});
+
+define({id: "2c4885eb", inputs: ["html","Inputs","Generators","gradientTypeInput","d3"], outputs: ["defaultColors","makeColorInputs","c0","c1","c2","c3","colorForm","rgb","shuffleGradientColors"], body: (html,Inputs,Generators,gradientTypeInput,d3) => {
+//
+// The gradient color inputs
+//
+const defaultColors = [
+    "#ffffff","#0000ff","#ff0000","#000000"
+    ];
+const makeColorInputs = () => defaultColors.map(color => {
+        let input = html`<input type="color" value=${color}>`;
+        return input;
+    });
+const [c0,c1,c2,c3] = makeColorInputs();
+const colorForm = Inputs.form({c0,c1,c2,c3});
+// Object.assign(colorForm.style, {
+//   display : "inline-block",
+//   verticalAlign : "middle"
+// });
+colorForm.insertBefore(html`<br>`, c2);
+const rgb = Generators.input(colorForm);
+const shuffleGradientColors = () => {
+  let {c0,c1,c2,c3} = colorForm.value;
+  if (gradientTypeInput.value == "3 colors") {
+    [c0,c2,c3] = d3.shuffle([c0,c2,c3]);
+  } else {
+    [c0,c1,c2,c3] = d3.shuffle([c0,c1,c2,c3]);
+  }
+  colorForm.value = {c0,c1,c2,c3};
+  colorForm.dispatchEvent (new CustomEvent("input"));
+}
+return {defaultColors,makeColorInputs,c0,c1,c2,c3,colorForm,rgb,shuffleGradientColors};
+}});
+
+define({id: "fac2ec25", inputs: ["html","shuffleGradientColors"], outputs: ["shuffleGradientColorsButton"], body: (html,shuffleGradientColors) => {
+// 
+// The button to shuffle gradient colors
+//
+const shuffleGradientColorsButton = html`<button> Shuffle </button`;
+shuffleGradientColorsButton.onclick = shuffleGradientColors;
+// Object.assign(shuffleGradientColorsButton.style, {
+//   verticalAlign : "middle",
+//   marginLeft: "10px"
+// });
+return {shuffleGradientColorsButton};
+}});
+
+define({id: "14ce69e8", inputs: ["Inputs","Generators"], outputs: ["gradientTypeInput","modeInput","mode","gradientType"], body: (Inputs,Generators) => {
+//
+// Interpolation settings
+//
+const gradientTypeInput = Inputs.select(["4 colors", "3 colors"], {
+  label: "Gradient type"
+});
+const modeInput = Inputs.select(["rgb", "lrgb", "oklab"], { label: "Interpolation" });
+const mode = Generators.input(modeInput);
+const gradientType = Generators.input(gradientTypeInput);
+return {gradientTypeInput,modeInput,mode,gradientType};
+}});
+
+define({id: "86a0086f", inputs: ["gradientType","d3"], body: (gradientType,d3) => {
+//
+// Hide some buttons if not 4-colors
+//
+{
+  const displayMode = gradientType == "4 colors" ? "inherit" : "none";
+  d3.selectAll("div.fourColorOnly").style("display", displayMode);
+}
+}});
+
+define({id: "8ce89712", inputs: ["html","gradientMaker","colorForm","gradientTypeInput","d3","modeInput","Event","triangleInteraction"], outputs: ["canvasInterface"], body: (html,gradientMaker,colorForm,gradientTypeInput,d3,modeInput,Event,triangleInteraction) => {
+// 
+// The main canvas interface
+//
+function canvasInterface (options = {}) {
+  let width = 500,
+    height = 500;
+    //******************************
+  let { snapping = false} = options;
+  const canvas = html`<canvas width=${width} height=${height}>`;
+  const ctx = canvas.getContext("2d");
+  const maker = gradientMaker({ width, height });
+  //let imgData;
+  const setImgData = () => {
+    const colors = colorForm.value;
+
+    let c =  gradientTypeInput.value  == "3 colors"
+      ? [colors.c0, colors.c2, colors.c3]
+      : [colors.c0, colors.c1, colors.c2, colors.c3];
+    c = c.map((color) => {
+      let { r, g, b } = d3.rgb(color);
+      return [r / 255, g / 255, b / 255, 1];
+    });
+
+    maker.gradient(c, modeInput.value);
+
+    //imgData = ctx.getImageData(0, 0, width, height);
+  };
+  setImgData();
+  const m = 12, w=width,h=height;
+  const snapPoints = [[m,m], [w/2,m], [w-m,m],
+                        [m,h/2], [w/2,h/2], [w-m, h/2],
+                        [m,h-m], [w/2,h-m], [w-m, h-m]];
+  let vertices = [
+    [...snapPoints[1]], [...snapPoints[6]], [...snapPoints[8]]
+  ];
+  let points;
+
+  const container = html`<div>`;
+  Object.assign(container.style, {
+    maxWidth: width + "px",
+    background: "gray",
+    padding: "10px"
+  });
+  container.append(canvas);
+  container.value = [];
+
+  const drawImageData = () => {
+    ctx.clearRect(0,0,width,height);
+    ctx.drawImage(maker,0,0);
+  }
+  ctx.canvas.drawImageData = drawImageData;
+
+  const drawInteractionWidgets = () => {
+    ctx.strokeStyle = "black";
+    ctx.setLineDash([8, 8]);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let p of points.slice(0, 3)) ctx.lineTo(...p);
+    ctx.closePath();
+    ctx.stroke();
+    for (let [i, j] of [
+      [0, 4],
+      [1, 5],
+      [2, 6]
+    ]) {
+      ctx.beginPath();
+      ctx.lineTo(...points[i]);
+      ctx.lineTo(...points[j]);
+      ctx.stroke();
+    }
+
+    ctx.setLineDash([]);
+
+    if (snapping) {
+      ctx.strokeStyle = "black";
+      for (let p of snapPoints) {
+        ctx.beginPath();
+        ctx.arc(...p, 6, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    }
+    for (let p of points.slice(0, 4)) {
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      ctx.arc(...p, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.arc(...p, 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    const palette = [];
+    for (let [x, y] of points) {
+      x = Math.max(0,Math.min(width-1,x));
+      y = Math.max(0,Math.min(height-1,y));
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(x, y, 8, 0, Math.PI * 2);
+      ctx.stroke();
+      const index = (Math.round(x) + Math.round(y) * width) * 4;
+      let [r, g, b, a] = maker.getPixel (x,height-1-y); //imgData.data.slice(index, index + 4);
+      palette.push(`rgb(${r},${g},${b})`);
+    }
+    //console.log ({fromMaker:maker.getPixel(points[0][0],height-points[0][1]), fromData:palette[0]})
+    container.value = palette;
+  };
+  canvas.drawInteractionWidgets = drawInteractionWidgets;
+
+  const change = (ctx, pts) => {
+    points = pts;
+    drawImageData();
+    drawInteractionWidgets();
+    container.dispatchEvent(new Event("input", { bubbles: true }));
+  };
+
+  const interaction = triangleInteraction(ctx, vertices, change);
+  const gradientChangeCallback = () => {
+    setImgData();
+    change(ctx, points);
+  };
+  colorForm.addEventListener("input", gradientChangeCallback);
+  modeInput.addEventListener("input", gradientChangeCallback);
+  gradientTypeInput.addEventListener("input", () => {
+    if (gradientTypeInput.value == "3 colors") container.setSnapPoints (false);
+    gradientChangeCallback ();
+  });
+  container.resetCentroid = () => {
+    interaction.resetCentroid ();
+  }
+  container.setSnapPoints = (toggle) => {
+    snapping = toggle;
+    interaction.setSnapPoints(toggle ? snapPoints : [])
+    drawImageData();
+    drawInteractionWidgets();
+  }
+  container.rotatePoints = interaction.rotatePoints;
+  return container;
+}
+return {canvasInterface};
+}});
+
+define({id: "4195a0aa", inputs: ["Mutable"], outputs: ["cardWidth","setCardWidth"], body: (Mutable) => {
+//
+// Reactivity to control the width of the canvas input
+//
+const cardWidth = Mutable(500);
+const setCardWidth = (w) => cardWidth.value = w;
+return {cardWidth,setCardWidth};
+}});
+
+define({id: "dd876180", inputs: ["canvasInterface","cardWidth","Generators","htl","html","FileAttachment"], outputs: ["paletteInput","originalPalette","saveCanvas","resetCentroidButton","snapToggleCheckbox","setSnapPoints","snapToggle","rotateCounterButton","rotateClockButton"], body: async (canvasInterface,cardWidth,Generators,htl,html,FileAttachment) => {
+const paletteInput = canvasInterface({width:cardWidth-20, height:cardWidth-20});
+const originalPalette = Generators.input(paletteInput);
+const saveCanvas = htl.html`<button>save image`;
+saveCanvas.onclick = () => {
+  const link = document.createElement("a");
+  link.download = "image.png";
+  const canvas = paletteInput.children[0];
+  canvas.drawImageData();
+  link.href = canvas.toDataURL("image/png");
+  canvas.drawInteractionWidgets();
+  link.click();
+};
+const resetCentroidButton = html`<button>reset centroid`;
+resetCentroidButton.onclick = paletteInput.resetCentroid;
+const snapToggleCheckbox = html`<input id=snap type=checkbox>`;
+const setSnapPoints = () => {
+    paletteInput.setSnapPoints (snapToggleCheckbox.checked);
+}
+snapToggleCheckbox.onclick = setSnapPoints;
+const snapToggle = html`<div>${snapToggleCheckbox}<label for=snap>Snap</label></div>`;
+const rotateCounterButton = 
+  html`<img width=30 src=${await FileAttachment("./data/rotateCounter.png").url()} />`;
+rotateCounterButton.onclick = () => paletteInput.rotatePoints(false);
+const rotateClockButton = 
+  html`<img width=30 src=${await FileAttachment("./data/rotateClock.png").url()} />`;
+rotateClockButton.onclick = () => paletteInput.rotatePoints(true);
+return {paletteInput,originalPalette,saveCanvas,resetCentroidButton,snapToggleCheckbox,setSnapPoints,snapToggle,rotateCounterButton,rotateClockButton};
+}});
+
+define({id: "5c4baa1c", inputs: ["Mutable","d3","html"], outputs: ["defaultOrder","paletteOrder","shufflePaletteOrder","resetPaletteOrder","shufflePaletteOrderButton","resetPaletteOrderButton"], body: (Mutable,d3,html) => {
+//
+// Controls to shuffle the palette
+//
+const defaultOrder =  [3, 4, 5, 6, 0, 1, 2];
+const paletteOrder = Mutable([...defaultOrder]);
+const shufflePaletteOrder = () => paletteOrder.value = d3.shuffle(paletteOrder.value);
+const resetPaletteOrder = () => paletteOrder.value = [...defaultOrder];
+const shufflePaletteOrderButton = html`<button>shuffle`;
+shufflePaletteOrderButton.onclick = shufflePaletteOrder;
+const resetPaletteOrderButton = html`<button>reset`;
+resetPaletteOrderButton.onclick = resetPaletteOrder;
+return {defaultOrder,paletteOrder,shufflePaletteOrder,resetPaletteOrder,shufflePaletteOrderButton,resetPaletteOrderButton};
+}});
+
+define({id: "3e966db7", inputs: ["paletteOrder","originalPalette"], outputs: ["palette"], body: (paletteOrder,originalPalette) => {
+//
+// The ordered palette
+//
+const palette = paletteOrder.map(i=>originalPalette[i])
+return {palette};
+}});
+
+define({id: "b367a245", inputs: ["Mutable","FileAttachment"], outputs: ["svgUrl","setSvgUrl"], body: async (Mutable,FileAttachment) => {
+//
+// The sample svg url
+//
+const svgUrl = Mutable(await FileAttachment("./data/testimg.svg").url());
+const setSvgUrl = (url => {svgUrl.value = url});
+return {svgUrl,setSvgUrl};
+}});
+
+define({id: "18c9de9d", inputs: ["html","svgUrl"], outputs: ["svgObject"], body: (html,svgUrl) => {
+//
+// The sample svg object
+//
+const svgObject = html`<object id="testimg" data=${svgUrl} type="image/svg+xml" style="width:100%;">`;
+return {svgObject};
+}});
+
+define({id: "c7939642", inputs: ["Inputs","Generators"], outputs: ["colorAssignmentAttrInput","colorAssignmentAttr"], body: (Inputs,Generators) => {
+//
+// Selects which path attribute is used to assign colors to svg
+//
+const colorAssignmentAttrInput = Inputs.select(["class", "fill"], { label: "Assign colors to paths by", value: "class" });
+const colorAssignmentAttr = Generators.input(colorAssignmentAttrInput);
+return {colorAssignmentAttrInput,colorAssignmentAttr};
+}});
+
+define({id: "c6d6732c", inputs: ["d3","colorAssignmentAttr","Mutable","palette","XMLSerializer","html","setSvgUrl"], outputs: ["getPathClasses","imageClasses","findSvgClasses","setSvgColors","saveSvg","saveSvgButton","loadSvg","loadSvgInputElement","loadSvgButton"], body: (d3,colorAssignmentAttr,Mutable,palette,XMLSerializer,html,setSvgUrl) => {
+//
+// Code to manipulate the path colors of an svg image
+//
+function getPathClasses (svgImage) {
+  let classes = new Set([]);
+  let counter = 0;
+  d3.select(svgImage)
+    .selectAll("path")
+    .each(function () {
+      const attrib = d3.select(this).attr(colorAssignmentAttr) || ++counter;
+      classes.add(attrib);
+    });
+  return classes;
+}
+const imageClasses = Mutable(new Set());
+const findSvgClasses = ()=>{
+  const svgSel = d3.select(document.getElementById("testimg").contentDocument);
+  const pathSel = svgSel.selectAll("path");
+  imageClasses.value = getPathClasses(document.getElementById("testimg").contentDocument);
+};
+setTimeout(findSvgClasses, 10);
+const setSvgColors = (testimg, palette) => {
+  let color = {};
+  let n = palette.length;
+  let pal = [...palette];
+  let i = 0;
+  for (let c of imageClasses.value) {
+    color[c] = pal [i]; //pal[color_order[i]];
+    i = (i + 1) % n;
+  }
+  let counter = 0;
+  d3.select(testimg)
+    .selectAll("path")
+    .each(function () {
+      const attrib = d3.select(this).attr(colorAssignmentAttr) || ++counter;
+      let path = d3.select(this);
+      path.style("fill", color[attrib]);
+    });
+}
+setTimeout(() => setSvgColors (document.getElementById("testimg").contentDocument, palette), 10);
+const saveSvg = () => {
+    var link = document.createElement("a");
+    link.download = "example.svg";
+
+    const svg = document.getElementById("testimg").contentDocument;
+    const serializer = new XMLSerializer();
+    let source = serializer.serializeToString(svg);
+
+    if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+      source = source.replace(
+        /^<svg/,
+        '<svg xmlns="http://www.w3.org/2000/svg"'
+      );
+    }
+    if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+      source = source.replace(
+        /^<svg/,
+        '<svg xmlns:xlink="http://www.w3.org/1999/xlink"'
+      );
+    }
+
+    source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+    const url =
+      "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+    link.href = url;
+    link.click();
+  };
+
+const saveSvgButton = html`<button>save svg`;
+saveSvgButton.onclick = saveSvg;
+const loadSvg = () => {
+  const input = loadSvgInputElement;
+  if (input.files.length == 0) {
+    return;
+  }
+  for (const file of input.files) {
+    setSvgUrl(URL.createObjectURL(file));
+  }
+}
+const loadSvgInputElement = html`<input type=file id="getSvg" style="display:none" accept=".svg">`;
+loadSvgInputElement.onchange = loadSvg;
+const loadSvgButton = html`
+<div><button onclick="document.getElementById('getSvg').click()">load svg</button>${loadSvgInputElement}
+  </div>`;
+return {getPathClasses,imageClasses,findSvgClasses,setSvgColors,saveSvg,saveSvgButton,loadSvg,loadSvgInputElement,loadSvgButton};
+}});
+
+define({id: "f5dc1a79", inline: true, inputs: ["colorForm","display"], body: async (colorForm,display) => {
+display(await(
+colorForm
+))
+}});
+
+define({id: "d516c309", inline: true, inputs: ["shuffleGradientColorsButton","display"], body: async (shuffleGradientColorsButton,display) => {
+display(await(
+shuffleGradientColorsButton
+))
+}});
+
+define({id: "cb58537b", inline: true, inputs: ["gradientTypeInput","display"], body: async (gradientTypeInput,display) => {
+display(await(
+gradientTypeInput
+))
+}});
+
+define({id: "764cbf36", inline: true, inputs: ["modeInput","display"], body: async (modeInput,display) => {
+display(await(
+modeInput
+))
+}});
+
+define({id: "df43963a", inline: true, inputs: ["paletteDisplay","palette","display"], body: async (paletteDisplay,palette,display) => {
+display(await(
+paletteDisplay(palette)
+))
+}});
+
+define({id: "29ee34f6", inline: true, inputs: ["shufflePaletteOrderButton","display"], body: async (shufflePaletteOrderButton,display) => {
+display(await(
+shufflePaletteOrderButton
+))
+}});
+
+define({id: "30eed08e", inline: true, inputs: ["resetPaletteOrderButton","display"], body: async (resetPaletteOrderButton,display) => {
+display(await(
+resetPaletteOrderButton
+))
+}});
+
+define({id: "77afa517", inline: true, inputs: ["colorAssignmentAttrInput","display"], body: async (colorAssignmentAttrInput,display) => {
+display(await(
+colorAssignmentAttrInput
+))
+}});
+
+define({id: "34dde4b3", inline: true, inputs: ["paletteInput","display"], body: async (paletteInput,display) => {
+display(await(
+paletteInput
+))
+}});
+
+define({id: "77fe2951", inline: true, inputs: ["saveCanvas","display"], body: async (saveCanvas,display) => {
+display(await(
+saveCanvas
+))
+}});
+
+define({id: "57202a60", inline: true, inputs: ["resetCentroidButton","display"], body: async (resetCentroidButton,display) => {
+display(await(
+resetCentroidButton
+))
+}});
+
+define({id: "259146b3", inline: true, inputs: ["snapToggle","display"], body: async (snapToggle,display) => {
+display(await(
+snapToggle
+))
+}});
+
+define({id: "34d8d1ac", inline: true, inputs: ["rotateCounterButton","display"], body: async (rotateCounterButton,display) => {
+display(await(
+rotateCounterButton
+))
+}});
+
+define({id: "5700333a", inline: true, inputs: ["rotateClockButton","display"], body: async (rotateClockButton,display) => {
+display(await(
+rotateClockButton
+))
+}});
+
+define({id: "bb878a4c", inline: true, inputs: ["resize","setCardWidth","svgObject","display"], body: async (resize,setCardWidth,svgObject,display) => {
+display(await(
+resize((width) => {setCardWidth(width); return svgObject})
+))
+}});
+
+define({id: "c93baabd", inline: true, inputs: ["saveSvgButton","display"], body: async (saveSvgButton,display) => {
+display(await(
+saveSvgButton
+))
+}});
+
+define({id: "c96aefad", inline: true, inputs: ["loadSvgButton","display"], body: async (loadSvgButton,display) => {
+display(await(
+loadSvgButton
+))
+}});
+
+</script>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="./">Palette Generators</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link"><a href="./huecontrast">Hue Contrast</a></li>
+    <li class="observablehq-link"><a href="./perceptualmixer">Perceptual Color Mixer</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./triangle">Triangle</a></li>
+  </ol>
+</nav>
+<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),o=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?o.checked=r==="true":o.indeterminate=!0;for(const t of document.querySelectorAll("#observablehq-sidebar summary")){const s=t.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${t.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type), h2:first-child, :not(h1) + h2">
+<nav>
+</nav>
+</aside>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<h1 id="triangle" tabindex="-1"><a class="observablehq-header-anchor" href="#triangle">Triangle</a></h1>
+<p>Creates a palette of 7 colors by interactively manipulating a triangle over a gradient image defined by 3 or 4 colors.</p>
+<div id="cell-c038c208" class="observablehq observablehq--block"></div>
+<div id="cell-2c4885eb" class="observablehq observablehq--block"></div>
+<div id="cell-fac2ec25" class="observablehq observablehq--block"></div>
+<div id="cell-14ce69e8" class="observablehq observablehq--block"></div>
+<div id="cell-86a0086f" class="observablehq observablehq--block"></div>
+<div id="cell-8ce89712" class="observablehq observablehq--block"></div>
+<div id="cell-4195a0aa" class="observablehq observablehq--block"></div>
+<div id="cell-dd876180" class="observablehq observablehq--block"></div>
+<div id="cell-5c4baa1c" class="observablehq observablehq--block"></div>
+<div id="cell-3e966db7" class="observablehq observablehq--block"></div>
+<div id="cell-b367a245" class="observablehq observablehq--block"></div>
+<div id="cell-18c9de9d" class="observablehq observablehq--block"></div>
+<div id="cell-c7939642" class="observablehq observablehq--block"></div>
+<div id="cell-c6d6732c" class="observablehq observablehq--block"></div>
+<style>
+  div.inlineSons >* {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+
+  div.centeredSons >* {
+    display: inline-block;
+    margin-left: auto;
+    margin-bottom: 10px;
+    width:100%;
+    text-align:center;
+  }
+</style>
+<div class="grid grid-cols-2">
+  <div class="card inlineSons"><span id="cell-f5dc1a79" class="observablehq--loading"></span><span id="cell-d516c309" class="observablehq--loading"></span></div>
+  <div class="card">
+  <span id="cell-cb58537b" class="observablehq--loading"></span>
+  <span id="cell-764cbf36" class="observablehq--loading"></span>
+  </div>
+</div>
+<div class="card inlineSons">
+  <span id="cell-df43963a" class="observablehq--loading"></span><span id="cell-29ee34f6" class="observablehq--loading"></span><span id="cell-30eed08e" class="observablehq--loading"></span><span id="cell-77afa517" class="observablehq--loading"></span>
+</div>
+<div class="grid grid-cols-2">
+  <div class="card centeredSons">
+    <span id="cell-34dde4b3" class="observablehq--loading"></span>
+    <div class="inlineSons">
+    <span id="cell-77fe2951" class="observablehq--loading"></span>
+    <span id="cell-57202a60" class="observablehq--loading"></span>
+    </div>
+    <div class="inlineSons fourColorOnly"> 
+      <span id="cell-259146b3" class="observablehq--loading"></span>
+      <span id="cell-34d8d1ac" class="observablehq--loading"></span>
+      <span id="cell-5700333a" class="observablehq--loading"></span>
+    </div>
+  </div>
+  <div id="sample" class="card centeredSons">
+    <span id="cell-bb878a4c" class="observablehq--loading"></span>
+     <div class="inlineSons">
+      <span id="cell-c93baabd" class="observablehq--loading"></span>
+      <span id="cell-c96aefad" class="observablehq--loading"></span>
+      </div>
+  </div>
+</div>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="prev" href="./perceptualmixer"><span>Perceptual Color Mixer</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank">Observable</a> on <a title="2024-05-29T17:18:39">May 29, 2024</a>.</div>
+</footer>
+</div>

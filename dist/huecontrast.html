@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Hue Contrast | Palette Generators</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.css">
+<link rel="modulepreload" href="./_observablehq/client.js">
+<link rel="modulepreload" href="./_observablehq/runtime.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.js">
+<link rel="modulepreload" href="./_import/components/palettedisplay.58e0c898.js">
+<link rel="modulepreload" href="./_import/components/okhsvcolorscale.c21c04c3.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/_esm.js">
+<link rel="modulepreload" href="./_import/components/colorconversion.83ea89a4.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/_esm.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/_esm.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/_esm.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.js";
+import {registerFile} from "./_observablehq/stdlib.js";
+
+registerFile("./data/Default2.svg", {"name":"./data/Default2.svg","mimeType":"image/svg+xml","path":"./_file/data/Default2.482d7da2.svg","lastModified":1714090630000});
+registerFile("./data/Default2p5.svg", {"name":"./data/Default2p5.svg","mimeType":"image/svg+xml","path":"./_file/data/Default2p5.6da42df0.svg","lastModified":1714090728000});
+registerFile("./data/Default3.svg", {"name":"./data/Default3.svg","mimeType":"image/svg+xml","path":"./_file/data/Default3.24138b7e.svg","lastModified":1714090746000});
+
+define({id: "510b8a36", outputs: ["paletteDisplay","okhsvColorScale"], body: async () => {
+const [{paletteDisplay}, {okhsvColorScale}] = await Promise.all([import("./_import/components/palettedisplay.58e0c898.js"), import("./_import/components/okhsvcolorscale.c21c04c3.js")]);
+
+//import {gammaColorScale} from "./components/gammacolorscale.js";
+//import {oklabColorScale} from "./components/oklabcolorscale.js";
+
+
+return {paletteDisplay,okhsvColorScale};
+}});
+
+define({id: "ffe8fe00", inputs: ["Mutable"], outputs: ["palette","setPalette","getPalette"], body: (Mutable) => {
+//
+// The palette
+//
+const palette = Mutable(["black","black","black"]);
+const setPalette = (colors) => {
+    palette.value = colors.map(c=>c.formatHex());
+}
+const getPalette = () => palette.value;
+return {palette,setPalette,getPalette};
+}});
+
+define({id: "e390bf7a", inputs: ["FileAttachment","Mutable"], outputs: ["defaultSvg","svgUrl","setSvgUrl"], body: async (FileAttachment,Mutable) => {
+//
+// The sample svg url
+//
+const defaultSvg = {
+    2 : await FileAttachment("./data/Default2.svg").url(),
+    2.5 : await FileAttachment("./data/Default2p5.svg").url(),
+    3 :  await FileAttachment("./data/Default3.svg").url()
+}
+const svgUrl = Mutable(defaultSvg[2]);
+const setSvgUrl = (url => {
+    svgUrl.value = url;
+});
+return {defaultSvg,svgUrl,setSvgUrl};
+}});
+
+define({id: "a2b4f3ca", inputs: ["html","svgUrl","setSvgColors","getPalette"], outputs: ["svgObject"], body: (html,svgUrl,setSvgColors,getPalette) => {
+//
+// The sample svg object
+//
+const svgObject = html`<object id="testimg" data=${svgUrl} type="image/svg+xml" style="width:100%;">`;
+svgObject.onload = () => {
+    setSvgColors (document.getElementById("testimg").contentDocument, getPalette());
+}
+return {svgObject};
+}});
+
+define({id: "2316de55", inputs: ["d3","okhsvColorScale","setPalette","html","Inputs","setSvgUrl","defaultSvg"], outputs: ["size","radius","innerRadius","outerRadius","main","hueCircle","colors","primaries","S","V","colorScale","data","pie","arc","flipDominant","flipSubordinate","colorAngles","radians","middleRadius","baseRadius","colorRadii","colorCircleGroup","colorCircles","updateCircles","baseAngle","ratio","flipAlongAxisButton","flipAcrossAxisButton","flipDominantButton","flipSubordinateButton","contrastRata","contrastRatioInput","usingDefaultSvg","setUsingDefaultSvg","loadDefaultSvg"], body: (d3,okhsvColorScale,setPalette,html,Inputs,setSvgUrl,defaultSvg) => {
+//
+// The hue  wheel and interactions
+//
+const size = 600;
+const radius = 250;
+const innerRadius = radius*0.6;
+const outerRadius = radius;
+const main = d3.create("svg")
+      .attr("viewBox", [-size/2, -size / 2, size, size])
+    //   .attr("width", size)
+    //   .attr("height", size);
+const hueCircle = main.append("g").attr("class", "hueCircle");
+const colors = [];
+const primaries = ['red','green','blue'];
+
+// const gamma = 1.5;
+// const colorScale = gammaColorScale (gamma);
+
+// const L = 0.5;
+// const C = 0.5;
+// const colorScale = oklabColorScale (L,C);
+
+const S = 1;
+const V = 1;
+const colorScale = okhsvColorScale(S,V);
+
+for (let i = 0; i < 360; i++) colors.push(colorScale (i/360));
+const data = d3.range(360).map(d=>1); 
+const pie = d3.pie(); 
+const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
+hueCircle.selectAll("path.huesegments")
+    .data(pie(data))
+    .join("path")
+      .attr("d", arc)
+      .attr("fill", (d,i)=>colors[i])
+      .attr("stroke", (d,i)=>colors[i]);
+let flipDominant = false;
+let flipSubordinate = false;
+const colorAngles = (baseAngle, ratio) => {
+    return [0, 0.5, 
+        flipSubordinate ? - 0.5 / ratio : 0.5 / ratio, 
+        flipDominant ? -0.5 /ratio /ratio : 0.5 /ratio /ratio]
+        .map(d => d+baseAngle)
+}
+const radians = (colorAngle) => (colorAngle-0.25)*Math.PI*2;
+const middleRadius = (outerRadius + innerRadius) / 2;
+const baseRadius = (outerRadius - innerRadius) / 2; 
+const colorRadii = [baseRadius*0.6, baseRadius *0.15, baseRadius*0.3, baseRadius*0.45];
+const colorCircleGroup = main.append("g").attr("class","colorCircles");
+
+const colorCircles = colorCircleGroup.selectAll("g.colorCircle")
+    .data(d3.range(4))
+    .join("g")
+        .attr("class", "colorCircle")
+        .each(function (d,i) {
+            const group = d3.select(this);
+            group.append("circle")
+                .attr("r",colorRadii[i])
+                .attr("stroke-width", 3)
+                .attr("stroke", "black")
+                .attr("fill", "none");
+            group.append("line")
+                .attr("stroke-width", 1.5)
+                .attr("stroke", "black")
+                .attr("x1", 0)
+                .attr("y1", 0)
+        });
+
+const updateCircles = (baseAngle,ratio) => {
+    const angles = colorAngles (baseAngle,ratio);
+    setPalette([angles[0], angles[3], angles[2], angles [1]].map(colorScale));
+    colorCircles.each (function(d,i) {
+        const group = d3.select(this);
+        const ang = radians(angles[i])
+        const [sin,cos] = [Math.sin(ang), Math.cos(ang)];
+        group.select("circle")
+            .attr("cx", middleRadius*cos)
+            .attr("cy", middleRadius*sin);
+        group.select("line")
+            .attr("x2", (middleRadius-colorRadii[i])*cos)
+            .attr("y2", (middleRadius-colorRadii[i])*sin)
+    })
+};
+
+let baseAngle = 0.5;
+let ratio = 2;
+{
+    let dragging = false;
+    let mouse;
+    main.on ("mousedown", (e) => {
+        dragging = true;
+        mouse = d3.pointer(e);
+        main.style("cursor", "pointer")
+    });
+    main.on ("mousemove", (e) => {
+        if (!dragging) return;
+        const [x0,y0] = mouse;
+        mouse = d3.pointer(e);
+        const [x1,y1] = mouse;
+        const angle0 = Math.atan2(y0,x0);
+        const angle1 = Math.atan2(y1,x1);
+        const dangle = angle1 - angle0;
+        baseAngle = (baseAngle +dangle /  Math.PI / 2);
+        updateCircles (baseAngle, ratio)
+    })
+    main.on ("mouseup", (e) => {
+        dragging = false;
+        main.style("cursor", "default")
+    })
+}
+
+const flipAlongAxisButton = html`<button style="float:left">Flip all along axis`;
+flipAlongAxisButton.onclick = () => {
+    baseAngle = (baseAngle + 0.5) % 1;
+    flipDominant = !flipDominant;
+    flipSubordinate = !flipSubordinate;
+    updateCircles(baseAngle, ratio);     
+}
+const flipAcrossAxisButton = html`<button style="float:left">Flip all across axis`;
+flipAcrossAxisButton.onclick = () => {
+    flipDominant = !flipDominant;
+    flipSubordinate = !flipSubordinate;
+    updateCircles(baseAngle, ratio);     
+}
+const flipDominantButton = html`<button style="float:right">Flip Dominant`;
+flipDominantButton.onclick = () => {
+    flipDominant = !flipDominant;
+    updateCircles(baseAngle, ratio);     
+}
+const flipSubordinateButton = html`<button style="float:right">Flip Subordinate`;
+flipSubordinateButton.onclick = () => {
+    flipSubordinate = !flipSubordinate;
+    updateCircles(baseAngle, ratio);     
+}
+const contrastRata = [2,2.5,3].map(d=>({label:`Common ratio of ${d}`, ratio:d}))
+const contrastRatioInput = Inputs.select(
+    contrastRata,
+    {label:"Select contrast ratio", format:d=>d.label}
+);
+let usingDefaultSvg = true;
+const setUsingDefaultSvg = (val) => { usingDefaultSvg = val;} ;
+const loadDefaultSvg = () => setSvgUrl(defaultSvg[ratio]);
+contrastRatioInput.addEventListener("input", () => {
+    ratio = contrastRatioInput.value.ratio;
+    if (usingDefaultSvg) loadDefaultSvg();
+    updateCircles(baseAngle, ratio);  
+})
+updateCircles(baseAngle, ratio);
+return {size,radius,innerRadius,outerRadius,main,hueCircle,colors,primaries,S,V,colorScale,data,pie,arc,flipDominant,flipSubordinate,colorAngles,radians,middleRadius,baseRadius,colorRadii,colorCircleGroup,colorCircles,updateCircles,baseAngle,ratio,flipAlongAxisButton,flipAcrossAxisButton,flipDominantButton,flipSubordinateButton,contrastRata,contrastRatioInput,usingDefaultSvg,setUsingDefaultSvg,loadDefaultSvg};
+}});
+
+define({id: "69f7aefa", inputs: ["d3"], outputs: ["setSvgColors"], body: (d3) => {
+//
+// Code to manipulate the path colors of an svg image
+//
+const setSvgColors = (testimg, palette) => {
+  let counter = 0;
+  d3.select(testimg)
+    .selectAll("path")
+    .each(function () {
+      let path = d3.select(this);
+      path.style("fill", palette[counter]);
+      counter = (counter+1) % palette.length;
+    });
+}
+return {setSvgColors};
+}});
+
+define({id: "99bf5d94", inputs: ["XMLSerializer","html","setUsingDefaultSvg","setSvgUrl","loadDefaultSvg"], outputs: ["saveSvg","saveSvgButton","loadSvg","loadSvgInputElement","loadSvgButton","loadDefaultSvgButton"], body: (XMLSerializer,html,setUsingDefaultSvg,setSvgUrl,loadDefaultSvg) => {
+//
+// Load / save svg buttons
+//
+const saveSvg = () => {
+    var link = document.createElement("a");
+    link.download = "example.svg";
+
+    const svg = document.getElementById("testimg").contentDocument;
+    const serializer = new XMLSerializer();
+    let source = serializer.serializeToString(svg);
+
+    if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+      source = source.replace(
+        /^<svg/,
+        '<svg xmlns="http://www.w3.org/2000/svg"'
+      );
+    }
+    if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+      source = source.replace(
+        /^<svg/,
+        '<svg xmlns:xlink="http://www.w3.org/1999/xlink"'
+      );
+    }
+
+    source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+    const url =
+      "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+    link.href = url;
+    link.click();
+  };
+
+const saveSvgButton = html`<button>save svg`;
+saveSvgButton.onclick = saveSvg;
+
+
+const loadSvg = () => {
+  const input = loadSvgInputElement;
+  if (input.files.length == 0) {
+    return;
+  }
+  for (const file of input.files) {
+    setUsingDefaultSvg(false);
+    setSvgUrl(URL.createObjectURL(file));
+  }
+}
+const loadSvgInputElement = html`<input type=file id="getSvg" style="display:none" accept=".svg">`;
+loadSvgInputElement.onchange = loadSvg;
+const loadSvgButton = html`
+<button onclick="document.getElementById('getSvg').click()">load custom svg</button>${loadSvgInputElement}`;
+
+const loadDefaultSvgButton = html`<button>load default svg`;
+loadDefaultSvgButton.onclick = () => {
+    setUsingDefaultSvg(true);
+    loadDefaultSvg();
+}
+return {saveSvg,saveSvgButton,loadSvg,loadSvgInputElement,loadSvgButton,loadDefaultSvgButton};
+}});
+
+define({id: "0c4079e7", inputs: ["setSvgColors","palette"], body: (setSvgColors,palette) => {
+// 
+// Update svg whenever palette changes
+//
+setTimeout(
+    () => setSvgColors (document.getElementById("testimg").contentDocument, palette), 
+    10
+);
+}});
+
+define({id: "df43963a", inline: true, inputs: ["paletteDisplay","palette","display"], body: async (paletteDisplay,palette,display) => {
+display(await(
+paletteDisplay(palette)
+))
+}});
+
+define({id: "3fb5a4ae", inline: true, inputs: ["main","display"], body: async (main,display) => {
+display(await(
+main.node()
+))
+}});
+
+define({id: "5846e639", inline: true, inputs: ["flipAlongAxisButton","display"], body: async (flipAlongAxisButton,display) => {
+display(await(
+flipAlongAxisButton
+))
+}});
+
+define({id: "4f15e4bd", inline: true, inputs: ["flipAcrossAxisButton","display"], body: async (flipAcrossAxisButton,display) => {
+display(await(
+flipAcrossAxisButton
+))
+}});
+
+define({id: "c05b6597", inline: true, inputs: ["flipDominantButton","display"], body: async (flipDominantButton,display) => {
+display(await(
+flipDominantButton
+))
+}});
+
+define({id: "a1ad0fb1", inline: true, inputs: ["flipSubordinateButton","display"], body: async (flipSubordinateButton,display) => {
+display(await(
+flipSubordinateButton
+))
+}});
+
+define({id: "4e708439", inline: true, inputs: ["contrastRatioInput","display"], body: async (contrastRatioInput,display) => {
+display(await(
+contrastRatioInput
+))
+}});
+
+define({id: "fc7e686a", inline: true, inputs: ["svgObject","display"], body: async (svgObject,display) => {
+display(await(
+svgObject
+))
+}});
+
+define({id: "d24daa94", inline: true, inputs: ["loadDefaultSvgButton","display"], body: async (loadDefaultSvgButton,display) => {
+display(await(
+loadDefaultSvgButton
+))
+}});
+
+define({id: "c96aefad", inline: true, inputs: ["loadSvgButton","display"], body: async (loadSvgButton,display) => {
+display(await(
+loadSvgButton
+))
+}});
+
+define({id: "c93baabd", inline: true, inputs: ["saveSvgButton","display"], body: async (saveSvgButton,display) => {
+display(await(
+saveSvgButton
+))
+}});
+
+</script>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="./">Palette Generators</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link observablehq-link-active"><a href="./huecontrast">Hue Contrast</a></li>
+    <li class="observablehq-link"><a href="./perceptualmixer">Perceptual Color Mixer</a></li>
+    <li class="observablehq-link"><a href="./triangle">Triangle</a></li>
+  </ol>
+</nav>
+<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),o=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?o.checked=r==="true":o.indeterminate=!0;for(const t of document.querySelectorAll("#observablehq-sidebar summary")){const s=t.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${t.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type), h2:first-child, :not(h1) + h2">
+<nav>
+</nav>
+</aside>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<h1 id="hue-contrast" tabindex="-1"><a class="observablehq-header-anchor" href="#hue-contrast">Hue Contrast</a></h1>
+<p>The role of hue contrast in picking <em>Background</em>, <em>Dominant</em>, <em>Subordinate</em> and <em>Accent</em> colors in a palette. The color wheel uses the <a href="https://bottosson.github.io/posts/colorpicker/">Okhsv</a> color space for improved perceptual uniformity.</p>
+<div id="cell-510b8a36" class="observablehq observablehq--block"></div>
+<div id="cell-ffe8fe00" class="observablehq observablehq--block"></div>
+<div id="cell-e390bf7a" class="observablehq observablehq--block"></div>
+<div id="cell-a2b4f3ca" class="observablehq observablehq--block"></div>
+<div id="cell-2316de55" class="observablehq observablehq--block"></div>
+<div id="cell-69f7aefa" class="observablehq observablehq--block"></div>
+<div id="cell-99bf5d94" class="observablehq observablehq--block"></div>
+<div id="cell-0c4079e7" class="observablehq observablehq--block"></div>
+<style>
+  div.inlineSons >* {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+
+  div.centeredSons >* {
+    display: inline-block;
+    margin-left: auto;
+    margin-bottom: 10px;
+    width:100%;
+    text-align:center;
+  }
+  
+</style>
+<div class="card inlineSons">
+  <span id="cell-df43963a" class="observablehq--loading"></span>
+</div>
+<div class="grid grid-cols-2">
+  <div class="card centeredSons">
+    <span id="cell-3fb5a4ae" class="observablehq--loading"></span>
+    <div class="inlineSons">
+        <div class="grid centeredSons">
+        <span id="cell-5846e639" class="observablehq--loading"></span>
+        <span id="cell-4f15e4bd" class="observablehq--loading"></span>
+        </div>
+        <div class="grid centeredSons">
+        <span id="cell-c05b6597" class="observablehq--loading"></span>
+        <span id="cell-a1ad0fb1" class="observablehq--loading"></span>
+        </div>
+    </div>
+    <span id="cell-4e708439" class="observablehq--loading"></span>
+  </div>
+  <div id="sample" class="card centeredSons">
+  <span id="cell-fc7e686a" class="observablehq--loading"></span>
+  <div class="inlineSons">
+      <span id="cell-d24daa94" class="observablehq--loading"></span>
+      <span id="cell-c96aefad" class="observablehq--loading"></span>
+      </div>
+         <span id="cell-c93baabd" class="observablehq--loading"></span>
+  </div>
+</div>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="prev" href="./"><span>Palette Generators</span></a><a rel="next" href="./perceptualmixer"><span>Perceptual Color Mixer</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank">Observable</a> on <a title="2024-05-29T17:18:39">May 29, 2024</a>.</div>
+</footer>
+</div>
